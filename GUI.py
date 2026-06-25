@@ -77,26 +77,63 @@ class Page1(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = ttk.Label(self, text="Page 1", font=LARGEFONT)
-        label.grid(row=0, column=4, padx=10, pady=10)
 
-        # button to show frame 2 with text
-        # layout2
-        button1 = ttk.Button(self, text="StartPage",
-                             command=lambda: controller.show_frame(StartPage))
+        value1 = tk.StringVar()
+        value2 = tk.StringVar()
+        value3 = tk.StringVar()
+        value4 = tk.StringVar()
+        value5 = tk.StringVar()
+        value6 = tk.StringVar()
 
-        # putting the button in its place
-        # by using grid
-        button1.grid(row=1, column=1, padx=10, pady=10)
+        def submit():
+            id = value1.get()
+            nome = value2.get()
+            numero = value3.get()
+            datanasc= value4.get()
+            endereco = value5.get()
+            contato = value6.get()
 
-        # button to show frame 2 with text
-        # layout2
-        button2 = ttk.Button(self, text="Page 2",
-                             command=lambda: controller.show_frame(Page2))
+            print("Seu ID é : " + id)
+            print("Seu nome é : " + nome)
+            print("Seu numero é : " + numero)
+            print("Sua data de nascimento é : " + datanasc)
+            print("Seu endereco é : " + endereco)
+            print("Seu contato é: " + contato)
 
-        # putting the button in its place by
-        # using grid
-        button2.grid(row=2, column=1, padx=10, pady=10)
+            value1.set("")
+            value2.set("")
+            value3.set("")
+            value4.set("")
+            value5.set("")
+            value6.set("")
+
+        tk.Label(self, text="").grid(row=0, column=0, padx=340, pady=10)
+
+        tk.Label(self, text="ID:", font=("Arial", 20)).grid(row=0, column=1)
+        tk.Label(self, text="Nome:", font=("Arial", 20)).grid(row=1, column=1)
+        tk.Label(self, text="CPF/CNPJ", font=("Arial", 20)).grid(row=2, column=1)
+        tk.Label(self, text="Data de Nascimento", font=("Arial", 20)).grid(row=3, column=1)
+        tk.Label(self, text="Endereço", font=("Arial", 20)).grid(row=4, column=1)
+        tk.Label(self, text="Contato", font=("Arial", 20)).grid(row=5, column=1)
+
+        entry1 = tk.Entry(self, textvariable=value1)
+        entry2 = tk.Entry(self, textvariable=value2)
+        entry3 = tk.Entry(self, textvariable=value3)
+        entry4 = tk.Entry(self, textvariable=value4)
+        entry5 = tk.Entry(self, textvariable=value5)
+        entry6 = tk.Entry(self, textvariable=value6)
+
+        entry1.grid(row=0, column=2)
+        entry2.grid(row=1, column=2)
+        entry3.grid(row=2, column=2)
+        entry4.grid(row=3, column=2)
+        entry5.grid(row=4, column=2)
+        entry6.grid(row=5, column=2)
+
+        button = tk.Button(self, text='Criar Funcionario', command=submit)
+
+        button.grid(row=6, column=2, padx=10, pady=10)
+
 
 
 # third window frame page2
