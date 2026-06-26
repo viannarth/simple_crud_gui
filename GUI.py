@@ -3,6 +3,79 @@ from tkinter import ttk
 
 LARGEFONT = ("Verdana", 35)
 
+def atualizar():
+    print("passou")
+
+def submeter(structure, value1, value2, value3, value4, value5, value6, function):
+
+    id = value1.get()
+    nome = value2.get()
+    numero = value3.get()
+    datanasc = value4.get()
+    endereco = value5.get()
+    contato = value6.get()
+
+
+    # label = tk.Label(structure, text="Dados inválidos, não foi possível criar funcionário", bg="black", fg="white",
+    #                  wraplength=100)
+    # label.place(relx=0.5, rely=0.5, anchor="center")
+    # structure.after(5000, label.destroy)
+
+    function()
+
+def createButton(structure, position : int, name : str, value1, value2, value3, value4, value5, value6, function):
+    button = tk.Button(structure, text= name, command=submeter(structure, value1, value2, value3, value4, value5, value6, function))
+
+    button.grid(row=position, column=1, padx=10, pady=10)
+
+
+def Fill (structure):
+    value1 = tk.StringVar()
+    value2 = tk.StringVar()
+    value3 = tk.StringVar()
+    value4 = tk.StringVar()
+    value5 = tk.StringVar()
+    value6 = tk.StringVar()
+
+    def submit(structure, function):
+        createButton(structure, 9, "atualizar funcionario", value1, value2, value3, value4, value5, value6, function)
+
+    tk.Label(structure, text="ID:", font=("Arial", 20)).grid(row=3, column=1)
+    tk.Label(structure, text="Nome:", font=("Arial", 20)).grid(row=4, column=1)
+    tk.Label(structure, text="CPF/CNPJ", font=("Arial", 20)).grid(row=5, column=1)
+    tk.Label(structure, text="Data de Nascimento", font=("Arial", 20)).grid(row=6, column=1)
+    tk.Label(structure, text="Endereço", font=("Arial", 20)).grid(row=7, column=1)
+    tk.Label(structure, text="Contato", font=("Arial", 20)).grid(row=8, column=1)
+
+    entry1 = tk.Entry(structure, textvariable=value1)
+    entry2 = tk.Entry(structure, textvariable=value2)
+    entry3 = tk.Entry(structure, textvariable=value3)
+    entry4 = tk.Entry(structure, textvariable=value4)
+    entry5 = tk.Entry(structure, textvariable=value5)
+    entry6 = tk.Entry(structure, textvariable=value6)
+
+    entry1.grid(row=3, column=2)
+    entry2.grid(row=4, column=2)
+    entry3.grid(row=5, column=2)
+    entry4.grid(row=6, column=2)
+    entry5.grid(row=7, column=2)
+    entry6.grid(row=8, column=2)
+
+    # button = tk.Button(structure, text='Criar Funcionario', command=submit(structure, atualizar))
+    #
+    # button.grid(row=9, column=1, padx=10, pady=10)
+
+    submit(structure, atualizar)
+
+    buttonback = tk.Button(structure, text="Startpage",
+                           command=lambda: controller.show_frame(StartPage))
+
+    buttonback.config(height=5, width=40)
+
+    # tk.Label(structure, text="").grid(row=7, column=0, padx=340, pady=200)
+    # buttonback.grid(row=8, column=1, padx=10, pady=10)
+
+
 
 class tkinterApp(tk.Tk):
 
@@ -93,12 +166,16 @@ class Page1(tk.Frame):
             endereco = value5.get()
             contato = value6.get()
 
-            print("Seu ID é : " + id)
-            print("Seu nome é : " + nome)
-            print("Seu numero é : " + numero)
-            print("Sua data de nascimento é : " + datanasc)
-            print("Seu endereco é : " + endereco)
-            print("Seu contato é: " + contato)
+            # print("Seu ID é : " + id)
+            # print("Seu nome é : " + nome)
+            # print("Seu numero é : " + numero)
+            # print("Sua data de nascimento é : " + datanasc)
+            # print("Seu endereco é : " + endereco)
+            # print("Seu contato é: " + contato)
+
+            label = tk.Label(self, text="Dados inválidos, não foi possível criar funcionário", bg="black", fg="white", wraplength=100)
+            label.place(relx=0.5, rely=0.5, anchor="center")
+            self.after(5000, label.destroy)
 
             value1.set("")
             value2.set("")
@@ -153,7 +230,11 @@ class Page2(tk.Frame):
 
         def submit():
             id = ID.get()
-            print("O funcionario a ser excluido tem ID: " + id)
+            # print("O funcionario a ser excluido tem ID: " + id)
+            label = tk.Label(self, text="Dados inválidos, não foi possível excluir funcionário", bg="black", fg="white",
+                             wraplength=100)
+            label.place(relx=0.5, rely=0.5, anchor="center")
+            self.after(5000, label.destroy)
 
         tk.Label(self, text="Id do funcionário a ser excluído:", font=("Arial", 20)).pack()
         entry = tk.Entry(self, textvariable=ID).pack()
@@ -211,26 +292,34 @@ class Page3(tk.Frame):
 class Page4(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = ttk.Label(self, text="Page 2", font=LARGEFONT)
-        label.grid(row=0, column=4, padx=10, pady=10)
 
-        # button to show frame 2 with text
-        # layout2
-        button1 = ttk.Button(self, text="Page 1",
-                             command=lambda: controller.show_frame(Page1))
+        ID = tk.StringVar()
 
-        # putting the button in its place by
-        # using grid
-        button1.grid(row=1, column=1, padx=10, pady=10)
+        def submit():
+            id = ID.get()
 
-        # button to show frame 3 with text
-        # layout3
-        button2 = ttk.Button(self, text="Startpage",
-                             command=lambda: controller.show_frame(StartPage))
+            if id == '0':
+                label = tk.Label(self, text="Dados inválidos, não foi possível encontrar funcionário", bg="black", fg="white",
+                                 wraplength=100)
+                label.place(relx=0.5, rely=0.5, anchor="center")
+                self.after(5000, label.destroy)
 
-        # putting the button in its place by
-        # using grid
-        button2.grid(row=2, column=1, padx=10, pady=10)
+            else:
+                Fill(self)
+
+        tk.Label(self, text="").grid(row=0, column=0, padx=340, pady=10)
+
+        tk.Label(self, text="Id do funcionário a ser atualizado:", font=("Arial", 20)).grid(row=0, column=1, padx=10, pady=20)
+        entry = tk.Entry(self, textvariable=ID).grid(row=1, column=1, padx=10, pady=20)
+
+        button = tk.Button(self, text='Submeter Funcionário a ser atualizado', command=submit).grid(row=2, column=1, padx=10, pady=20)
+
+        buttonback = tk.Button(self, text="Startpage",
+                               command=lambda: controller.show_frame(StartPage))
+
+        buttonback.config(height=5, width=40)
+
+        buttonback.grid(row=10, column=1, padx=10, pady=10)
 
 
 # Driver Code
