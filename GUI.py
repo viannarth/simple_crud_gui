@@ -134,32 +134,41 @@ class Page1(tk.Frame):
 
         button.grid(row=6, column=2, padx=10, pady=10)
 
+        buttonback = tk.Button(self, text="Startpage",
+                           command=lambda: controller.show_frame(StartPage))
+
+        buttonback.config(height=5, width=40)
+
+        tk.Label(self, text="").grid(row=7, column=0, padx=340, pady=200)
+        buttonback.grid(row=8, column=1, padx=10, pady=10)
+
 
 
 # third window frame page2
 class Page2(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = ttk.Label(self, text="Page 2", font=LARGEFONT)
-        label.grid(row=0, column=4, padx=10, pady=10)
 
-        # button to show frame 2 with text
-        # layout2
-        button1 = ttk.Button(self, text="Page 1",
-                             command=lambda: controller.show_frame(Page1))
+        ID = tk.StringVar()
 
-        # putting the button in its place by
-        # using grid
-        button1.grid(row=1, column=1, padx=10, pady=10)
+        def submit():
+            id = ID.get()
+            print("O funcionario a ser excluido tem ID: " + id)
 
-        # button to show frame 3 with text
-        # layout3
-        button2 = ttk.Button(self, text="Startpage",
-                             command=lambda: controller.show_frame(StartPage))
+        tk.Label(self, text="Id do funcionário a ser excluído:", font=("Arial", 20)).pack()
+        entry = tk.Entry(self, textvariable=ID).pack()
 
-        # putting the button in its place by
-        # using grid
-        button2.grid(row=2, column=1, padx=10, pady=10)
+        button = tk.Button(self, text='Excluir Funcionario', command=submit).pack()
+
+        buttonback = tk.Button(self, text="Startpage",
+                               command=lambda: controller.show_frame(StartPage))
+
+        buttonback.config(height=5, width=40)
+
+        tk.Label(self, text="", height = 30).pack()
+
+
+        buttonback.pack()
 
 
 class Page3(tk.Frame):
@@ -191,9 +200,10 @@ class Page3(tk.Frame):
         button = tk.Button(self, text="Startpage",
                              command=lambda: controller.show_frame(StartPage))
 
-        button.config(height=5, width=20)
+        button.config(height=5, width=40)
 
-        button.grid(row=1, column=3, padx=10, pady=10)
+        tk.Label(self, text="").grid(row=1, column=2, padx=10, pady=200)
+        button.grid(row=2, column=3, padx=10, pady=10)
 
 
 
@@ -226,6 +236,35 @@ class Page4(tk.Frame):
 # Driver Code
 app = tkinterApp()
 app.mainloop()
+
+
+
+
+
+
+# class Page(tk.Frame):
+#     def __init__(self, parent, controller):
+#         tk.Frame.__init__(self, parent)
+#         label = ttk.Label(self, text="Page 2", font=LARGEFONT)
+#         label.grid(row=0, column=4, padx=10, pady=10)
+#
+#         # button to show frame 2 with text
+#         # layout2
+#         button1 = ttk.Button(self, text="Page 1",
+#                              command=lambda: controller.show_frame(Page1))
+#
+#         # putting the button in its place by
+#         # using grid
+#         button1.grid(row=1, column=1, padx=10, pady=10)
+#
+#         # button to show frame 3 with text
+#         # layout3
+#         button2 = ttk.Button(self, text="Startpage",
+#                              command=lambda: controller.show_frame(StartPage))
+#
+#         # putting the button in its place by
+#         # using grid
+#         button2.grid(row=2, column=1, padx=10, pady=10)
 
 
 
