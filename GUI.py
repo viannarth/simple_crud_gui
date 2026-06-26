@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import *
 
 LARGEFONT = ("Verdana", 35)
 
@@ -86,6 +86,19 @@ def Fill (structure, position:int):
 
 
 ########################################################################
+
+
+
+# class StartTable:
+#
+#     def __init__(self, root, list):
+#
+#         for j in range(len(list)):
+#             self.e = Entry(root, width=10, fg='blue',
+#                           font=('Arial', 16, 'bold'))
+#
+#             self.e.grid(row=0, column=j)
+#             self.e.insert(END, value)
 
 
 class tkinterApp(tk.Tk):
@@ -280,31 +293,22 @@ class Page3(tk.Frame):
         # label = ttk.Label(self, text="Page 1", font=LARGEFONT)
         # label.grid(row=0, column=4, padx=10, pady=10)
 
-        label = tk.Label(self, text="ID", font=("Arial", 20), width=17, height=2)
-        label.grid(row=0, column=0, padx=10, pady=10)
+        list = ["ID", "Nome", "CPF/CNPJ", "Data de Nascimento", "Endereço", "Contato"]
 
-        label = tk.Label(self, text="Nome", font=("Arial", 20), width=17, height=2)
-        label.grid(row=0, column=1, padx=10, pady=10)
+        for j in range(len(list)):
+            label = Entry(self, width=27, fg='blue',
+                          font=('Arial', 16, 'bold'))
 
-        label = tk.Label(self, text="CPF/CNPJ", font=("Arial", 20), width=17, height=2)
-        label.grid(row=0, column=2, padx=10, pady=10)
+            label.grid(row=0, column=j)
+            label.insert(END, list[j])
 
-        label = tk.Label(self, text="Data Nasc", font=("Arial", 20), width=17, height=2)
-        label.grid(row=0, column=3, padx=30, pady=10)
-
-        label = tk.Label(self, text="Endereco", font=("Arial", 20), width=17, height=2)
-        label.grid(row=0, column=4, padx=10, pady=10)
-
-        label = tk.Label(self, text="Contato", font=("Arial", 20), width=17, height=2)
-        label.grid(row=0, column=5, padx=10, pady=10)
 
         button = tk.Button(self, text="Startpage",
                              command=lambda: controller.show_frame(StartPage))
 
-        button.config(height=5, width=40)
+        button.config(height=5, width=20)
 
-        tk.Label(self, text="").grid(row=1, column=2, padx=10, pady=200)
-        button.grid(row=2, column=3, padx=10, pady=10)
+        button.grid(row=2, column=3, padx=0, pady=0)
 
 
 
