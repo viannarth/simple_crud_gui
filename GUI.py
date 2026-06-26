@@ -103,55 +103,33 @@ def Fill (structure, position:int):
 
 class tkinterApp(tk.Tk):
 
-    # __init__ function for class tkinterApp
-    def __init__(self, *args, **kwargs):
-        # __init__ function for class Tk
-        tk.Tk.__init__(self, *args, **kwargs)
+    def __init__(self):
+        tk.Tk.__init__(self)
+        self._frame = None
+        self.switch_frame(StartPage)
 
-        # creating a container
-        container = tk.Frame(self)
-        container.pack(side="top", fill="both", expand=True)
-
-        container.grid_rowconfigure(0, weight=1)
-        container.grid_columnconfigure(0, weight=1)
-
-        # initializing frames to an empty array
-        self.frames = {}
-
-        # iterating through a tuple consisting
-        # of the different page layouts
-        for F in (StartPage, Page1, Page2, Page3, Page4):
-            frame = F(container, self)
-
-            # initializing frame of that object from
-            # startpage, page1, page2 respectively with
-            # for loop
-            self.frames[F] = frame
-
-            frame.grid(row=0, column=0, sticky="nsew")
-
-        self.show_frame(StartPage)
-
-    # to display the current frame passed as
-    # parameter
-    def show_frame(self, cont):
-        frame = self.frames[cont]
-        frame.tkraise()
+    def switch_frame(self, frame_class):
+        """Destroys current frame and replaces it with a new one."""
+        new_frame = frame_class(self)
+        if self._frame is not None:
+            self._frame.destroy()
+        self._frame = new_frame
+        self._frame.pack()
 
 
 # first window frame startpage
 
 class StartPage(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
 
         tk.Label(self, text="\n\nInterface do Catálogo", font=("Comfortaa", 50)).pack()
         tk.Label(self, text="\nSelecione a opção desejada\n", font=("Arial", 20)).pack()
 
-        sub1 = tk.Button(self, text='Cadastrar Prestador de serviço', command=lambda: controller.show_frame(Page1))
-        sub2 = tk.Button(self, text='Excluir Prestador de serviço', command=lambda: controller.show_frame(Page2))
-        sub3 = tk.Button(self, text='Consultar Prestadores de serviço', command=lambda: controller.show_frame(Page3))
-        sub4 = tk.Button(self, text='Atualizar Prestador de serviço', command=lambda: controller.show_frame(Page4))
+        sub1 = tk.Button(self, text="Cadastrar Prestador de Serviço", command=lambda: master.switch_frame(Page1))
+        sub2 = tk.Button(self, text='Excluir Prestador de serviço', command=lambda: master.switch_frame(Page2))
+        sub3 = tk.Button(self, text='Consultar Prestadores de serviço', command=lambda: master.switch_frame(Page3))
+        sub4 = tk.Button(self, text='Atualizar Prestador de serviço', command=lambda: master.switch_frame(Page4))
 
         sub1['height'] = 5
         sub2['height'] = 5
@@ -172,8 +150,8 @@ class StartPage(tk.Frame):
 # second window frame page1
 class Page1(tk.Frame):
 
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
 
         value1 = tk.StringVar()
         value2 = tk.StringVar()
@@ -198,7 +176,7 @@ class Page1(tk.Frame):
             # print("Seu contato é: " + contato)
 
             label = tk.Label(self, text="Funcionário criado com sucesso!", bg="black", fg="white", wraplength=100)
-            label.place(relx=0.5, rely=0.5, anchor="center")
+            label.grid(row=9, column=1, padx=10, pady=10)
             self.after(5000, label.destroy)
 
             value1.set("")
@@ -208,7 +186,6 @@ class Page1(tk.Frame):
             value5.set("")
             value6.set("")
 
-        tk.Label(self, text="").grid(row=0, column=0, padx=340, pady=10)
 
         tk.Label(self, text="ID:", font=("Arial", 20)).grid(row=0, column=1)
         tk.Label(self, text="Nome:", font=("Arial", 20)).grid(row=1, column=1)
@@ -231,24 +208,24 @@ class Page1(tk.Frame):
         entry5.grid(row=4, column=2)
         entry6.grid(row=5, column=2)
 
+
         button = tk.Button(self, text='Criar Funcionario', command=submit)
 
         button.grid(row=6, column=2, padx=10, pady=10)
 
         buttonback = tk.Button(self, text="Startpage",
-                           command=lambda: controller.show_frame(StartPage))
+                           command=lambda: master.switch_frame(StartPage))
 
         buttonback.config(height=5, width=40)
 
-        tk.Label(self, text="").grid(row=7, column=0, padx=340, pady=200)
         buttonback.grid(row=8, column=1, padx=10, pady=10)
 
 
 
 # third window frame page2
 class Page2(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
 
         ID = tk.StringVar()
 
@@ -275,7 +252,7 @@ class Page2(tk.Frame):
         button = tk.Button(self, text='Excluir Funcionario', command=submit).pack()
 
         buttonback = tk.Button(self, text="Startpage",
-                               command=lambda: controller.show_frame(StartPage))
+                               command=lambda: master.switch_frame(StartPage))
 
         buttonback.config(height=5, width=40)
 
@@ -286,8 +263,8 @@ class Page2(tk.Frame):
 
 
 class Page3(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
 
         # tk.Frame.__init__(self, parent)
         # label = ttk.Label(self, text="Page 1", font=LARGEFONT)
@@ -304,7 +281,7 @@ class Page3(tk.Frame):
 
 
         button = tk.Button(self, text="Startpage",
-                             command=lambda: controller.show_frame(StartPage))
+                             command=lambda: master.switch_frame(StartPage))
 
         button.config(height=5, width=20)
 
@@ -314,8 +291,8 @@ class Page3(tk.Frame):
 
 
 class Page4(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
 
         value1 = tk.StringVar()
         value2 = tk.StringVar()
@@ -388,10 +365,6 @@ class Page4(tk.Frame):
 
             button = tk.Button(self, text='Criar Funcionario', command=submit).grid(row=9, column=1)
 
-
-
-        tk.Label(self, text="").grid(row=0, column=0, padx=340, pady=10)
-
         tk.Label(self, text="Id do funcionário a ser atualizado:", font=("Arial", 20)).grid(row=0, column=1, padx=10, pady=20)
 
         entry = tk.Entry(self, textvariable=ID).grid(row=1, column=1, padx=10, pady=20)
@@ -400,7 +373,7 @@ class Page4(tk.Frame):
                                                                                                     padx=10, pady=20)
 
         buttonback = tk.Button(self, text="Startpage",
-                               command=lambda: controller.show_frame(StartPage))
+                               command=lambda: master.switch_frame(StartPage))
 
         buttonback.config(height=5, width=40)
 
