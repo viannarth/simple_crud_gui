@@ -301,7 +301,15 @@ class Page4(tk.Frame):
         value5 = tk.StringVar()
         value6 = tk.StringVar()
 
+        word = tk.StringVar()
+
         ID = tk.StringVar()
+
+        def verify(var, index, mode):
+            if value5.get() == "103D":
+                word.set("      Endereço certo ")
+            else:
+                word.set("      Endereço errado")
 
         def check():
             if ID.get() == '0':
@@ -365,7 +373,11 @@ class Page4(tk.Frame):
 
             button = tk.Button(self, text='Criar Funcionario', command=submit).grid(row=9, column=1)
 
+        value5.trace("w", verify)
+
         tk.Label(self, text="Id do funcionário a ser atualizado:", font=("Arial", 20)).grid(row=0, column=1, padx=10, pady=20)
+
+        tk.Label(self, textvariable= word, font=("Arial", 10)).grid(row=7, column=3)
 
         entry = tk.Entry(self, textvariable=ID).grid(row=1, column=1, padx=10, pady=20)
 
