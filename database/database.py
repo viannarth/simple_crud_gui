@@ -23,8 +23,7 @@ class Database():
                         id INTEGER PRIMARY KEY,
                         nome TEXT NOT NULL,
                         data_nascimento TEXT NOT NULL,
-                        cpf TEXT,
-                        cnpj TEXT,
+                        cpf_cnpj TEXT NOT NULL,
                         contato TEXT NOT NULL
                     );""",
                 """CREATE TABLE IF NOT EXISTS enderecos (
@@ -56,8 +55,8 @@ class Database():
 
         try:
             statement:str = """INSERT INTO prestadores(
-                nome,data_nascimento,cpf,cnpj,contato
-            ) VALUES(?,?,?,?,?);"""
+                nome,data_nascimento,cpf_cnpj,contato
+            ) VALUES(?,?,?,?);"""
             
             cur = self.conn.cursor()
 
@@ -125,7 +124,7 @@ class Database():
                 provider_new = provider_new + (data_new,)
 
             statement_new:str = """UPDATE prestadores
-            SET nome=?,data_nascimento=?,cpf=?,cnpj=?,contato=?
+            SET nome=?,data_nascimento=?,cpf_cnpj=?,contato=?
             WHERE id=?;"""
 
             cur.execute(statement_new, provider_new + (id,))
@@ -229,34 +228,42 @@ class Database():
             self.conn.close()      
             
 
+
+# Example of usage
 def main():
     db = Database()
+
+    # Inserting data
     data1 = {
-        'provider': ("Beltrano", "DDMMYYYY", "12345678910", None, "5512999999999"),
+        'provider': ("Beltrano", "DDMMYYYY", "12345678910", "5512999999999"),
         'address': ("Rua", "Número", None, "Bairro", "Cidade", "UF", "99999999")
     }
     data2 = {
-        'provider': ("Ciclano", "DDMMYYYY", "12345678910", None, "5512999999999"),
+        'provider': ("Ciclano", "DDMMYYYY", "12345678910", "5512999999999"),
         'address': ("Rua", "Número", None, "Bairro", "Cidade", "UF", "99999999")
     }
     db.insert(data1)
     db.insert(data2)
 
+    # Fetching data
     rows = db.fetch()
     for row in rows:
         print(row)
     print('\n')
 
+    # Deleting provider
     id_del = 1
     db.delete(id_del)
 
+    # Updating provider
     id_up = 2
     data_up = {
-        'provider': (None, None, None, None, "5521999999999"),
+        'provider': (None, None, None, "5521999999999"),
         'address': (None, None, None, None, None, None, "12345678")
     }
     db.update(id_up, data_up)
 
+    # Fetching data
     rows = db.fetch()
     for row in rows:
         print(row)
