@@ -2,8 +2,8 @@ import re
 from datetime import datetime
 
 
-def format_str(str_:str) -> str:
-    return str_.upper().strip()
+def format_text(text:str) -> str:
+    return text.upper().strip()
 
 def format_num(num:str) -> str:
     pattern = r'[^\d]'
@@ -72,10 +72,12 @@ def is_valid_cep(cep:str) -> bool:
 
 # Example of usage
 def main():
+    # Validating CPF/CNPJ
     print("CPF/CNPJ:")
     print(is_valid_cpf_cnpj("81.303.380/0001-34"))
     print(is_valid_cpf_cnpj("81.303.380/0001-35\n"))
 
+    # Validating date of birth
     print("Data de nascimento:")
     print(is_valid_data_nascimento("29/02/2006"))
     print(is_valid_data_nascimento("29-02-2020"))
