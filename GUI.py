@@ -159,14 +159,51 @@ class Page1(tk.Frame):
         value4 = tk.StringVar()
         value5 = tk.StringVar()
         value6 = tk.StringVar()
+        value7 = tk.StringVar()
+        value8 = tk.StringVar()
+        value9 = tk.StringVar()
+        value10 = tk.StringVar()
+        value11 = tk.StringVar()
+        value12 = tk.StringVar()
 
         word = tk.StringVar()
 
         def verify(var, index, mode):
-            if value5.get() == "103D":
+            if value6.get() == "103D":
                 word.set("      Endereço certo ")
+                adress()
             else:
                 word.set("      Endereço errado")
+                value7.set("")
+                value8.set("")
+                value9.set("")
+                value10.set("")
+                value11.set("")
+                value12.set("")
+
+        def adress():
+            label1 = tk.Label(self, text="Rua:", font=("Arial", 20)).grid(row=9, column=1)
+            tk.Label(self, text="Número:", font=("Arial", 20)).grid(row=10, column=1)
+            tk.Label(self, text="Complemento:", font=("Arial", 20)).grid(row=11, column=1)
+            tk.Label(self, text="Bairro:", font=("Arial", 20)).grid(row=12, column=1)
+            tk.Label(self, text="Cidade:", font=("Arial", 20)).grid(row=13, column=1)
+            tk.Label(self, text="UF:", font=("Arial", 20)).grid(row=14, column=1)
+
+            entry7 = tk.Entry(self, textvariable=value7)
+            entry8 = tk.Entry(self, textvariable=value8)
+            entry9 = tk.Entry(self, textvariable=value9)
+            entry10 = tk.Entry(self, textvariable=value10)
+            entry11 = tk.Entry(self, textvariable=value11)
+            entry12 = tk.Entry(self, textvariable=value12)
+
+            entry7.grid(row=9, column=2)
+            entry8.grid(row=10, column=2)
+            entry9.grid(row=11, column=2)
+            entry10.grid(row=12, column=2)
+            entry11.grid(row=13, column=2)
+            entry12.grid(row=14, column=2)
+
+            value7.set("Rua H8C")
 
         def submit():
             id = value1.get()
@@ -183,8 +220,9 @@ class Page1(tk.Frame):
             # print("Seu endereco é : " + endereco)
             # print("Seu contato é: " + contato)
 
-            label = tk.Label(self, text="Funcionário criado com sucesso!", bg="black", fg="white", wraplength=100)
-            label.grid(row=9, column=1, padx=10, pady=10)
+            label = tk.Label(self, text="Funcionário criado com sucesso!", bg="#d9d9d9", fg="#dc143c", wraplength=100)
+            label.config(height=3, width=20)
+            label.grid(row=20, column=1, padx=10, pady=10)
             self.after(5000, label.destroy)
 
             value1.set("")
@@ -193,14 +231,19 @@ class Page1(tk.Frame):
             value4.set("")
             value5.set("")
             value6.set("")
+            value7.set("")
+            value8.set("")
+            value9.set("")
+            value10.set("")
+            value11.set("")
+            value12.set("")
 
-
-        tk.Label(self, text="ID:", font=("Arial", 20)).grid(row=0, column=1)
-        tk.Label(self, text="Nome:", font=("Arial", 20)).grid(row=1, column=1)
-        tk.Label(self, text="CPF/CNPJ", font=("Arial", 20)).grid(row=2, column=1)
-        tk.Label(self, text="Data de Nascimento", font=("Arial", 20)).grid(row=3, column=1)
-        tk.Label(self, text="Endereço", font=("Arial", 20)).grid(row=4, column=1)
-        tk.Label(self, text="Contato", font=("Arial", 20)).grid(row=5, column=1)
+        tk.Label(self, text="ID:", font=("Arial", 20)).grid(row=3, column=1)
+        tk.Label(self, text="Nome:", font=("Arial", 20)).grid(row=4, column=1)
+        tk.Label(self, text="CPF/CNPJ:", font=("Arial", 20)).grid(row=5, column=1)
+        tk.Label(self, text="Data de Nascimento:", font=("Arial", 20)).grid(row=6, column=1)
+        tk.Label(self, text="Contato:", font=("Arial", 20)).grid(row=7, column=1)
+        tk.Label(self, text="CEP:", font=("Arial", 20)).grid(row=8, column=1)
 
         entry1 = tk.Entry(self, textvariable=value1)
         entry2 = tk.Entry(self, textvariable=value2)
@@ -209,28 +252,27 @@ class Page1(tk.Frame):
         entry5 = tk.Entry(self, textvariable=value5)
         entry6 = tk.Entry(self, textvariable=value6)
 
-        entry1.grid(row=0, column=2)
-        entry2.grid(row=1, column=2)
-        entry3.grid(row=2, column=2)
-        entry4.grid(row=3, column=2)
-        entry5.grid(row=4, column=2)
-        entry6.grid(row=5, column=2)
+        entry1.grid(row=3, column=2)
+        entry2.grid(row=4, column=2)
+        entry3.grid(row=5, column=2)
+        entry4.grid(row=6, column=2)
+        entry5.grid(row=7, column=2)
+        entry6.grid(row=8, column=2)
 
-        value5.trace("w", verify)
+        value6.trace("w", verify)
 
-        tk.Label(self, textvariable=word, font=("Arial", 10)).grid(row=4, column=3)
-
+        tk.Label(self, textvariable=word, font=("Arial", 10)).grid(row=8, column=3)
 
         button = tk.Button(self, text='Criar Funcionario', command=submit)
 
-        button.grid(row=6, column=2, padx=10, pady=10)
+        button.grid(row=18, column=2, padx=10, pady=10)
 
-        buttonback = tk.Button(self, text="Startpage",
+        buttonback = tk.Button(self, text="Página Inicial",
                            command=lambda: master.switch_frame(StartPage))
 
         buttonback.config(height=5, width=40)
 
-        buttonback.grid(row=8, column=1, padx=10, pady=10)
+        buttonback.grid(row=19, column=1, padx=10, pady=10)
 
 
 
@@ -245,14 +287,13 @@ class Page2(tk.Frame):
             id = ID.get()
 
             if id == '0':
-                label = tk.Label(self, text="Dados inválidos, não foi possível excluir funcionário", bg="black", fg="white",
-                                 wraplength=100)
+                label = tk.Label(self, text="Dados inválidos, não foi possível excluir funcionário", bg="#d9d9d9",
+                                 fg="#dc143c", wraplength=100)
                 label.place(relx=0.5, rely=0.5, anchor="center")
                 self.after(5000, label.destroy)
 
             else:
-                label = tk.Label(self, text="Funcionário Excluído com Sucesso!", bg="black",
-                                 fg="white",
+                label = tk.Label(self, text="Funcionário Excluído com Sucesso!", bg="#d9d9d9", fg="#dc143c",
                                  wraplength=100)
                 label.place(relx=0.5, rely=0.5, anchor="center")
                 self.after(5000, label.destroy)
@@ -263,7 +304,7 @@ class Page2(tk.Frame):
 
         button = tk.Button(self, text='Excluir Funcionario', command=submit).pack()
 
-        buttonback = tk.Button(self, text="Startpage",
+        buttonback = tk.Button(self, text="Página Inicial",
                                command=lambda: master.switch_frame(StartPage))
 
         buttonback.config(height=5, width=40)
@@ -292,7 +333,7 @@ class Page3(tk.Frame):
             label.insert(END, list[j])
 
 
-        button = tk.Button(self, text="Startpage",
+        button = tk.Button(self, text="Página Inicial",
                              command=lambda: master.switch_frame(StartPage))
 
         button.config(height=5, width=20)
@@ -325,10 +366,10 @@ class Page4(tk.Frame):
 
         def verify(var, index, mode):
             if value6.get() == "103D":
-                word.set("      Endereço certo ")
+                word.set("      Endereço válido  ")
                 adress()
             else:
-                word.set("      Endereço errado")
+                word.set("      Endereço inválido")
                 value7.set("")
                 value8.set("")
                 value9.set("")
@@ -338,9 +379,9 @@ class Page4(tk.Frame):
 
         def check():
             if ID.get() == '0':
-                label = tk.Label(self, text="Dados inválidos, não foi possível acessar funcionário", bg="black", fg="white",
-                         wraplength=100)
-                label.grid(row=11, column=1, padx=10, pady=30)
+                label = tk.Label(self, text="Dados inválidos, não foi possível acessar funcionário", bg="#d9d9d9",
+                                 fg="#dc143c", wraplength=100)
+                label.grid(row=21, column=1, padx=10, pady=30)
                 self.after(5000, label.destroy)
 
             else:
@@ -386,9 +427,9 @@ class Page4(tk.Frame):
             # print("Seu endereco é : " + endereco)
             # print("Seu contato é: " + contato)
 
-            label = tk.Label(self, text="Dados inválidos, não foi possível atualizar funcionário", bg="black", fg="white",
-                             wraplength=100)
-            label.grid(row=11, column=1, padx=10, pady=30)
+            label = tk.Label(self, text="Dados inválidos, não foi possível atualizar funcionário", bg="#d9d9d9",
+                             fg="#dc143c", wraplength=100)
+            label.grid(row=20, column=1, padx=10, pady=30)
             self.after(5000, label.destroy)
 
             value1.set("")
@@ -397,6 +438,12 @@ class Page4(tk.Frame):
             value4.set("")
             value5.set("")
             value6.set("")
+            value7.set("")
+            value8.set("")
+            value9.set("")
+            value10.set("")
+            value11.set("")
+            value12.set("")
 
 
         def Preencher():
@@ -405,7 +452,7 @@ class Page4(tk.Frame):
             tk.Label(self, text="CPF/CNPJ:", font=("Arial", 20)).grid(row=5, column=1)
             tk.Label(self, text="Data de Nascimento:", font=("Arial", 20)).grid(row=6, column=1)
             tk.Label(self, text="Contato:", font=("Arial", 20)).grid(row=7, column=1)
-            tk.Label(self, text="Endereço:", font=("Arial", 20)).grid(row=8, column=1)
+            tk.Label(self, text="CEP:", font=("Arial", 20)).grid(row=8, column=1)
 
             entry1 = tk.Entry(self, textvariable=value1)
             entry2 = tk.Entry(self, textvariable=value2)
@@ -434,7 +481,7 @@ class Page4(tk.Frame):
         button = tk.Button(self, text='Submeter Funcionário a ser atualizado', command=check).grid(row=2, column=1,
                                                                                                     padx=10, pady=20)
 
-        buttonback = tk.Button(self, text="Startpage",
+        buttonback = tk.Button(self, text="Página Inicial",
                                command=lambda: master.switch_frame(StartPage))
 
         buttonback.config(height=5, width=40)
