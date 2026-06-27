@@ -3,11 +3,21 @@ from datetime import datetime
 
 
 def format_text(text:str) -> str:
+    pattern_spaces = r'\s+'
+    text = re.sub(pattern_spaces, ' ', text)
     return text.upper().strip()
 
 def format_num(num:str) -> str:
-    pattern = r'[^\d]'
+    pattern = r'[\D]'
     return re.sub(pattern, '', num)
+
+def is_valid_text(text:str) -> bool:
+    pattern = r'[^A-Za-zÀ-ÖØ-öø-ÿ\s]'
+    return False if re.search(pattern, text) else True
+
+def is_valid_num(num:str) -> bool:
+    pattern = r'[\D]'
+    return False if re.search(pattern, num) else True
 
 def is_valid_cpf_cnpj(num:str) -> bool:
     num = format_num(num)
@@ -72,10 +82,15 @@ def is_valid_cep(cep:str) -> bool:
 
 # Example of usage
 def main():
+    # Validating text
+    print("Text:")
+    print(is_valid_text("Abóbora"))
+    print(is_valid_text("Example123"))
+
     # Validating CPF/CNPJ
     print("CPF/CNPJ:")
     print(is_valid_cpf_cnpj("81.303.380/0001-34"))
-    print(is_valid_cpf_cnpj("81.303.380/0001-35\n"))
+    print(is_valid_cpf_cnpj("81.303.380/0001-35"))
 
     # Validating date of birth
     print("Data de nascimento:")
