@@ -61,6 +61,14 @@ def is_valid_contato(contato:str) -> bool:
     
     return True
 
+def is_valid_cep(cep:str) -> bool:
+    num_cep = format_num(cep)
+
+    if len(num_cep) != 8:
+        return False
+    
+    return True
+
 
 # Example of usage
 def main():
