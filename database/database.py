@@ -170,6 +170,29 @@ class Database():
         finally:
             self.conn.close()
 
+    def verify_id(self, id:int) -> bool:
+        self._connect()
+
+        try:
+
+            cur = self.conn.cursor()
+            
+            statement:str = "SELECT 1 FROM prestadores WHERE id=?;"
+
+            cur.execute(statement, (id,))
+
+            self.conn.commit()
+
+            if cur.fetchone() is None:
+                return False
+            
+            return True
+            
+        except (sqlite3.OperationalError, sqlite3.IntegrityError) as e:
+            print("Failed to verify ID:", e)
+
+        finally:
+            self.conn.close()      
 
     def update(self, id:int, data:dict[str, tuple]):
 
@@ -226,7 +249,6 @@ class Database():
 
         finally:
             self.conn.close()      
-            
 
 
 # Example of usage
@@ -249,10 +271,10 @@ def main():
     rows = db.fetch()
     for row in rows:
         print(row)
-    print('\n')
 
     # Deleting provider
     id_del = 1
+    print("ID is in the database:", db.verify_id(id_del))
     db.delete(id_del)
 
     # Updating provider
