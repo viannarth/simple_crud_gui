@@ -160,6 +160,14 @@ class Page1(tk.Frame):
         value5 = tk.StringVar()
         value6 = tk.StringVar()
 
+        word = tk.StringVar()
+
+        def verify(var, index, mode):
+            if value5.get() == "103D":
+                word.set("      Endereço certo ")
+            else:
+                word.set("      Endereço errado")
+
         def submit():
             id = value1.get()
             nome = value2.get()
@@ -207,6 +215,10 @@ class Page1(tk.Frame):
         entry4.grid(row=3, column=2)
         entry5.grid(row=4, column=2)
         entry6.grid(row=5, column=2)
+
+        value5.trace("w", verify)
+
+        tk.Label(self, textvariable=word, font=("Arial", 10)).grid(row=4, column=3)
 
 
         button = tk.Button(self, text='Criar Funcionario', command=submit)
@@ -300,16 +312,29 @@ class Page4(tk.Frame):
         value4 = tk.StringVar()
         value5 = tk.StringVar()
         value6 = tk.StringVar()
+        value7 = tk.StringVar()
+        value8 = tk.StringVar()
+        value9 = tk.StringVar()
+        value10 = tk.StringVar()
+        value11 = tk.StringVar()
+        value12 = tk.StringVar()
 
         word = tk.StringVar()
 
         ID = tk.StringVar()
 
         def verify(var, index, mode):
-            if value5.get() == "103D":
+            if value6.get() == "103D":
                 word.set("      Endereço certo ")
+                adress()
             else:
                 word.set("      Endereço errado")
+                value7.set("")
+                value8.set("")
+                value9.set("")
+                value10.set("")
+                value11.set("")
+                value12.set("")
 
         def check():
             if ID.get() == '0':
@@ -320,6 +345,31 @@ class Page4(tk.Frame):
 
             else:
                 Preencher()
+
+        def adress():
+            label1 = tk.Label(self, text="Rua:", font=("Arial", 20)).grid(row=9, column=1)
+            tk.Label(self, text="Número:", font=("Arial", 20)).grid(row=10, column=1)
+            tk.Label(self, text="Complemento:", font=("Arial", 20)).grid(row=11, column=1)
+            tk.Label(self, text="Bairro:", font=("Arial", 20)).grid(row=12, column=1)
+            tk.Label(self, text="Cidade:", font=("Arial", 20)).grid(row=13, column=1)
+            tk.Label(self, text="UF:", font=("Arial", 20)).grid(row=14, column=1)
+
+            entry7 = tk.Entry(self, textvariable=value7)
+            entry8 = tk.Entry(self, textvariable=value8)
+            entry9 = tk.Entry(self, textvariable=value9)
+            entry10 = tk.Entry(self, textvariable=value10)
+            entry11 = tk.Entry(self, textvariable=value11)
+            entry12 = tk.Entry(self, textvariable=value12)
+
+            entry7.grid(row=9, column=2)
+            entry8.grid(row=10, column=2)
+            entry9.grid(row=11, column=2)
+            entry10.grid(row=12, column=2)
+            entry11.grid(row=13, column=2)
+            entry12.grid(row=14, column=2)
+
+            value7.set("Rua H8C")
+
 
         def submit():
             id = value1.get()
@@ -352,10 +402,10 @@ class Page4(tk.Frame):
         def Preencher():
             tk.Label(self, text="ID:", font=("Arial", 20)).grid(row=3, column=1)
             tk.Label(self, text="Nome:", font=("Arial", 20)).grid(row=4, column=1)
-            tk.Label(self, text="CPF/CNPJ", font=("Arial", 20)).grid(row=5, column=1)
-            tk.Label(self, text="Data de Nascimento", font=("Arial", 20)).grid(row=6, column=1)
-            tk.Label(self, text="Endereço", font=("Arial", 20)).grid(row=7, column=1)
-            tk.Label(self, text="Contato", font=("Arial", 20)).grid(row=8, column=1)
+            tk.Label(self, text="CPF/CNPJ:", font=("Arial", 20)).grid(row=5, column=1)
+            tk.Label(self, text="Data de Nascimento:", font=("Arial", 20)).grid(row=6, column=1)
+            tk.Label(self, text="Contato:", font=("Arial", 20)).grid(row=7, column=1)
+            tk.Label(self, text="Endereço:", font=("Arial", 20)).grid(row=8, column=1)
 
             entry1 = tk.Entry(self, textvariable=value1)
             entry2 = tk.Entry(self, textvariable=value2)
@@ -371,13 +421,13 @@ class Page4(tk.Frame):
             entry5.grid(row=7, column=2)
             entry6.grid(row=8, column=2)
 
-            button = tk.Button(self, text='Criar Funcionario', command=submit).grid(row=9, column=1)
+            button = tk.Button(self, text='Criar Funcionario', command=submit).grid(row=17, column=1)
 
-        value5.trace("w", verify)
+        value6.trace("w", verify)
 
         tk.Label(self, text="Id do funcionário a ser atualizado:", font=("Arial", 20)).grid(row=0, column=1, padx=10, pady=20)
 
-        tk.Label(self, textvariable= word, font=("Arial", 10)).grid(row=7, column=3)
+        tk.Label(self, textvariable= word, font=("Arial", 10)).grid(row=8, column=3)
 
         entry = tk.Entry(self, textvariable=ID).grid(row=1, column=1, padx=10, pady=20)
 
@@ -389,7 +439,7 @@ class Page4(tk.Frame):
 
         buttonback.config(height=5, width=40)
 
-        buttonback.grid(row=10, column=1, padx=10, pady=10)
+        buttonback.grid(row=18, column=1, padx=10, pady=10)
 
 
 # Driver Code
