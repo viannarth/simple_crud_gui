@@ -1,4 +1,4 @@
-from controller import Controller
+from src.controller import Controller
 
 import tkinter as tk
 from tkinter import *

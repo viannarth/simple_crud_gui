@@ -1,7 +1,7 @@
 import sqlite3
 
 
-DATABASE_PATH = './database/database.db'
+DATABASE_PATH = './src/database/database.db'
 
 class Database():
     def __init__(self):
