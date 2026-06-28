@@ -2,14 +2,52 @@ import re
 from datetime import datetime
 
 
-def format_text(text:str) -> str:
+def format_text(text:str | None) -> str | None:
+    if text is None:
+        return None
+    
     pattern_spaces = r'\s+'
     text = re.sub(pattern_spaces, ' ', text)
     return text.upper().strip()
 
-def format_num(num:str) -> str:
+def format_num(num:str | None) -> str | None:
+    if num is None:
+        return None
+    
     pattern = r'[\D]'
     return re.sub(pattern, '', num)
+
+def format_cpf_cnpj(cpf_cnpj: str | None) -> str | None:
+    if cpf_cnpj is None:
+        return None
+
+    num = format_num(cpf_cnpj)
+
+    if len(num) == 11:
+        cpf_formatted = f"{num[:3]}.{num[3:6]}.{num[6:9]}-{num[-2:]}"
+        return cpf_formatted
+
+    else:
+        cnpj_formatted = f"{num[:2]}.{num[2:5]}.{num[5:8]}/{num[8:12]}-{num[-2:]}"
+        return cnpj_formatted  
+    
+def format_data_nascimento(data_nascimento:str | None) -> str | None:
+    if data_nascimento is None:
+        return None
+    
+    num = format_num(data_nascimento)
+
+    data_nascimento_formatted = f"{num[:2]}/{num[2:4]}/{num[-4:]}"
+    return data_nascimento_formatted
+
+def format_cep(cep:str | None) -> str | None:
+    if cep is None:
+        return None
+    
+    num = format_num(cep)
+
+    cep_formatted = f"{num[:5]}-{num[-3:]}"
+    return cep_formatted
 
 def is_valid_text(text:str) -> bool:
     pattern = r'[^A-Za-zÀ-ÖØ-öø-ÿ\s]'
@@ -82,18 +120,33 @@ def is_valid_cep(cep:str) -> bool:
 
 # Example of usage
 def main():
+    # Formatting CPF
+    cpf = "12345678901"
+    print("Unformatted CPF:", cpf)
+    print("Formatted CPF:", format_cpf_cnpj(cpf))
+
+    # Formatting birth date
+    data_nascimento = "01012000"
+    print("Unformatted birth date:", data_nascimento)
+    print("Formatted birth date:", format_data_nascimento(data_nascimento))
+
+    # Formatting CEP
+    cep = "12345678"
+    print("Unformatted CEP:", cep)
+    print("Formatted CEP:", format_cep(cep))
+
     # Validating text
-    print("Text:")
+    print("Validating text:")
     print(is_valid_text("Abóbora"))
     print(is_valid_text("Example123"))
 
     # Validating CPF/CNPJ
-    print("CPF/CNPJ:")
+    print("Validating CPF/CNPJ:")
     print(is_valid_cpf_cnpj("81.303.380/0001-34"))
     print(is_valid_cpf_cnpj("81.303.380/0001-35"))
 
     # Validating date of birth
-    print("Data de nascimento:")
+    print("Validating data de nascimento:")
     print(is_valid_data_nascimento("29/02/2006"))
     print(is_valid_data_nascimento("29-02-2020"))
 
