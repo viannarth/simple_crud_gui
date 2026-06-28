@@ -237,7 +237,12 @@ class Database():
         try:
             cur = self.conn.cursor()
 
-            statement = """SELECT * FROM prestadores JOIN
+            statement = """SELECT prestadores.id, prestadores.nome, 
+            prestadores.data_nascimento, prestadores.cpf_cnpj, 
+            prestadores.contato, enderecos.rua, enderecos.numero,
+            enderecos.bairro, enderecos.cidade, enderecos.uf,
+            enderecos.cep
+            FROM prestadores JOIN
             enderecos ON prestadores.id=enderecos.id_prestador;"""
 
             cur.execute(statement)
