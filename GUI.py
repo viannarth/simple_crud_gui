@@ -256,10 +256,10 @@ class DeletePage(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
 
-        ID = tk.StringVar()
+        id_val = tk.StringVar()
 
         def submit():
-            id = ID.get()
+            id = int(id_val.get())
 
             if not controller.verify_id(id):
                 label = tk.Label(self, text="ID inexistente na base de dados.", bg="#d9d9d9",
@@ -277,7 +277,7 @@ class DeletePage(tk.Frame):
 
         tk.Label(self, text="ID do funcionário a ser excluído:", font=("Arial", 20)).pack()
 
-        entry = tk.Entry(self, textvariable=ID).pack()
+        entry = tk.Entry(self, textvariable=id_val).pack()
 
         button = tk.Button(self, text='Excluir Funcionário', command=submit).pack()
 
@@ -309,11 +309,6 @@ class ReadPage(tk.Frame):
                 label = Entry(self, width=29, fg='black',font=('Arial', 14))
                 label.grid(row=i+1, column=j)
                 label.insert(END, row[j])
-            
-            endereco = f"Rua: {row[5]}\nNúmero: {row[6]}\nBairro: {row[7]}\nCidade: {row[8]}\nUF: {row[9]}\nCEP: {row[10]}"
-            label = Entry(self, width=32, fg='black',font=('Arial', 12))
-            label.grid(row=i+1, column=j+1)
-            label.insert(END, endereco)
 
 
         button = tk.Button(self, text="Página Inicial",
@@ -394,7 +389,7 @@ class UpdatePage(tk.Frame):
                 uf_val.set("")
 
         def check_id():
-            id = id_val.get()
+            id = int(id_val.get())
 
             if not controller.verify_id(id):
                 label = tk.Label(self, text="ID inexistente na base de dados.", bg="#d9d9d9",
@@ -403,7 +398,7 @@ class UpdatePage(tk.Frame):
                 self.after(5000, label.destroy)
 
             else:
-                Preencher()
+                preencher()
 
         def address(address_data:dict[str, str]):
             tk.Label(self, text="Rua:", font=("Arial", 20)).grid(row=9, column=1)
@@ -434,7 +429,7 @@ class UpdatePage(tk.Frame):
             entry12.grid(row=14, column=2)
         
         def submit():
-            id = id_val.get()
+            id = int(id_val.get())
             nome = nome_val.get()
             cpf_cnpj = cpf_cnpj_val.get()
             data_nascimento = data_nascimento_val.get()
@@ -502,10 +497,22 @@ class UpdatePage(tk.Frame):
             cidade_val.set("")
             uf_val.set("")
 
-        def Preencher():
+        def preencher():
+            id = int(id_val.get())
+
+            data_id = controller.read_id(id)
+
+            nome_val.set(data_id[1])
+            data_nascimento_val.set(data_id[2])
+            cpf_cnpj_val.set(data_id[3])
+            contato_val.set(data_id[4])
+            cep_val.set(data_id[-1])
+            numero_val.set(data_id[6])
+            complemento_val.set(data_id[7])
+
             tk.Label(self, text="Nome:", font=("Arial", 20)).grid(row=4, column=1)
-            tk.Label(self, text="CPF/CNPJ:", font=("Arial", 20)).grid(row=5, column=1)
-            tk.Label(self, text="Data de Nascimento:", font=("Arial", 20)).grid(row=6, column=1)
+            tk.Label(self, text="Data de Nascimento:", font=("Arial", 20)).grid(row=5, column=1)
+            tk.Label(self, text="CPF/CNPJ:", font=("Arial", 20)).grid(row=6, column=1)
             tk.Label(self, text="Contato:", font=("Arial", 20)).grid(row=7, column=1)
             tk.Label(self, text="CEP:", font=("Arial", 20)).grid(row=8, column=1)
 
