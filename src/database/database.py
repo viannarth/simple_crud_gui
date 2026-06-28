@@ -12,7 +12,7 @@ class Database():
         try:
             self.conn = sqlite3.connect(DATABASE_PATH)
         except (sqlite3.OperationalError, sqlite3.IntegrityError) as e:
-            print("Failed to open database:", e)
+            raise e
 
     def _create(self):
         self._connect()
@@ -45,7 +45,7 @@ class Database():
             self.conn.commit()
             
         except (sqlite3.OperationalError, sqlite3.IntegrityError) as e:
-            print("Failed to create tables:", e)
+            raise e
 
         finally:
             self.conn.close()
@@ -67,7 +67,7 @@ class Database():
             return cur.lastrowid
             
         except (sqlite3.OperationalError, sqlite3.IntegrityError) as e:
-            print("Failed to insert provider:", e)
+            raise e
 
         finally:
             self.conn.close()
@@ -87,7 +87,7 @@ class Database():
             self.conn.commit()
             
         except (sqlite3.OperationalError, sqlite3.IntegrityError) as e:
-            print("Failed to insert address:", e)
+            raise e
 
         finally:
             self.conn.close()
@@ -102,7 +102,7 @@ class Database():
             self._insert_address(address)
 
         except (sqlite3.OperationalError, sqlite3.IntegrityError) as e:
-            print("Failed to insert data:", e)
+            raise e
 
     def _update_provider(self, id:int, provider:tuple):
         self._connect()
@@ -132,7 +132,7 @@ class Database():
             self.conn.commit()
             
         except (sqlite3.OperationalError, sqlite3.IntegrityError) as e:
-            print("Failed to update table:", e)
+            raise e
 
         finally:
             self.conn.close()
@@ -165,7 +165,7 @@ class Database():
             self.conn.commit()
             
         except (sqlite3.OperationalError, sqlite3.IntegrityError) as e:
-            print("Failed to update table:", e)
+            raise e
 
         finally:
             self.conn.close()
@@ -189,7 +189,7 @@ class Database():
             return True
             
         except (sqlite3.OperationalError, sqlite3.IntegrityError) as e:
-            print("Failed to verify ID:", e)
+            raise e
 
         finally:
             self.conn.close()      
@@ -207,7 +207,7 @@ class Database():
                 self._update_address(id, address)
             
         except (sqlite3.OperationalError, sqlite3.IntegrityError) as e:
-            print("Failed to update data:", e)
+            raise e
 
 
     def delete(self, id:int):
@@ -226,7 +226,7 @@ class Database():
             self.conn.commit()
             
         except (sqlite3.OperationalError, sqlite3.IntegrityError) as e:
-            print("Failed to delete data:", e)
+            raise e
 
         finally:
             self.conn.close()        
@@ -251,7 +251,7 @@ class Database():
             return cur.fetchone()
             
         except (sqlite3.OperationalError, sqlite3.IntegrityError) as e:
-            print("Failed to fetch data:", e)
+            raise e
 
         finally:
             self.conn.close()   
@@ -275,7 +275,7 @@ class Database():
             return cur.fetchall()
             
         except (sqlite3.OperationalError, sqlite3.IntegrityError) as e:
-            print("Failed to fetch data:", e)
+            raise e
 
         finally:
             self.conn.close()      
