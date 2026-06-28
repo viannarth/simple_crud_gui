@@ -49,6 +49,15 @@ def format_cep(cep:str | None) -> str | None:
     cep_formatted = f"{num[:5]}-{num[-3:]}"
     return cep_formatted
 
+def format_contato(contato:str | None) -> str | None:
+    if contato is None:
+        return None
+    
+    num = format_num(contato)
+
+    contact_formatted = f"({num[:2]}) {num[2:7]}-{num[-4:]}"
+    return contact_formatted
+
 def is_valid_text(text:str) -> bool:
     pattern = r'[^A-Za-zÀ-ÖØ-öø-ÿ\s]'
     return False if re.search(pattern, text) else True
@@ -134,6 +143,11 @@ def main():
     cep = "12345678"
     print("Unformatted CEP:", cep)
     print("Formatted CEP:", format_cep(cep))
+
+    # Formatting contact
+    contato = "12987654321"
+    print("Unformatted contact:", contato)
+    print("Formatted contact:", format_contato(contato))
 
     # Validating text
     print("Validating text:")
