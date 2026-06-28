@@ -27,6 +27,9 @@ class Controller():
     
     def validate_contato(self, contato:str) -> bool:
         return is_valid_contato(contato)
+    
+    def validate_cep(self, cep:str) -> bool:
+        return is_valid_cep(cep)
 
     def autocomplete_address(self, cep:str) -> dict[str, str]:
 
