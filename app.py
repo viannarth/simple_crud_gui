@@ -1,7 +1,7 @@
-from src.gui import tkinterApp
+from src.gui import App
 
 def main():
-    app = tkinterApp()
+    app = App()
     app.mainloop()
 
 if __name__ == "__main__":

@@ -1,4 +1,5 @@
-from src.controller import Controller
+from .controller import Controller
+
 
 import tkinter as tk
 from tkinter import *
@@ -8,7 +9,7 @@ LARGEFONT = ("Verdana", 35)
 
 controller = Controller()
 
-class tkinterApp(tk.Tk):
+class App(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
         self._frame = None
@@ -295,20 +296,38 @@ class ReadPage(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
 
+        line = "-"
+        line = 3*27*6*line
+
         header = ["ID", "Nome", "Data de Nascimento", "CPF/CNPJ", "Contato", "Endereço"]
 
         for j, column in enumerate(header):
-            label = Entry(self, width=27, fg='blue', font=('Arial', 16, 'bold'))
+            label = Entry(self, width=27, fg='blue', font=('Arial', 16, 'bold'), background="#7cfc00")
             label.grid(row=0, column=j)
             label.insert(END, column)
 
         rows = controller.read_db()
 
+        i = 0
         for i, row in enumerate(rows):
             for j in range(len(header) - 1):
-                label = Entry(self, width=29, fg='black',font=('Arial', 14))
-                label.grid(row=i+1, column=j)
+                label = Entry(self, width=27, fg='black',font=('Arial', 14), bg="#d9d9d9", borderwidth=0)
+                label.grid(row=2*i+1, column=j)
                 label.insert(END, row[j])
+
+            address_str = ""
+            for address_field in row[-7:]:
+                if address_field is None:
+                    continue
+
+                address_str = "\n".join([address_str, address_field])
+
+
+            text = tk.Text(self, height=8, width=40, background="#d9d9d9", borderwidth=0)
+            text.grid(row=2*i+1, column=j+1, columnspan=1)
+            text.insert(tk.END, address_str)
+
+            tk.Label(self, text=line, height=1).grid(row=2*i + 2, column=0, columnspan=7)
 
 
         button = tk.Button(self, text="Página Inicial",
@@ -316,7 +335,7 @@ class ReadPage(tk.Frame):
 
         button.config(height=5, width=20)
 
-        button.grid(row=2, column=3, padx=0, pady=0)
+        button.grid(row=2*i+3, column=2, padx=0, pady=0, columnspan=2)
 
 
 class UpdatePage(tk.Frame):
@@ -553,7 +572,7 @@ class UpdatePage(tk.Frame):
 
 
 def main():
-    app = tkinterApp()
+    app = App()
     app.mainloop()
 
 if __name__ == "__main__":

@@ -1,14 +1,13 @@
 # Python virtual environment
 .env
+.venv
 
-<<<<<<< HEAD
-=======
 # Python cache folder
 __pycache__
 
->>>>>>> refactor
-# VSCode settings folder
+# IDE cache folder
 .vscode
+.idea
 
 # SQLite local file
-/database/database.db
+src/database/database.db

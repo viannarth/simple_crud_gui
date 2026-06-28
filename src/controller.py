@@ -1,9 +1,9 @@
-from src.database.database import Database
+from .database.database import Database
 
 
-from src.utils.formatter import *
+from .utils.formatter import *
 
-from src.utils.cep import get_cep
+from .utils.cep import get_cep
 
 
 from typing import Any

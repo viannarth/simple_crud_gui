@@ -59,7 +59,7 @@ def format_contato(contato:str | None) -> str | None:
     return contact_formatted
 
 def is_valid_text(text:str) -> bool:
-    pattern = r'[^A-Za-zÀ-ÖØ-öø-ÿ\s]'
+    pattern = r'[^A-Za-zÀ-ÖØ-öø-ÿ\s0-9]'
     return False if re.search(pattern, text) else True
 
 def is_valid_num(num:str) -> bool:
@@ -102,6 +102,12 @@ def is_valid_cpf_cnpj(num:str) -> bool:
 
 def is_valid_data_nascimento(data_nascimento:str) -> bool:
     num_data = format_num(data_nascimento)
+
+    year = int(num_data[-4:])
+
+    if year < 1900 or year > 2026:
+        return False
+
     format = "%d%m%Y"
 
     try:
@@ -125,7 +131,6 @@ def is_valid_cep(cep:str) -> bool:
         return False
     
     return True
-
 
 # Example of usage
 def main():
@@ -152,15 +157,15 @@ def main():
     # Validating text
     print("Validating text:")
     print(is_valid_text("Abóbora"))
-    print(is_valid_text("Example123"))
+    print(is_valid_text("Example@"))
 
     # Validating CPF/CNPJ
     print("Validating CPF/CNPJ:")
     print(is_valid_cpf_cnpj("81.303.380/0001-34"))
     print(is_valid_cpf_cnpj("81.303.380/0001-35"))
 
-    # Validating date of birth
-    print("Validating data de nascimento:")
+    # Validating birth date
+    print("Validating birth date:")
     print(is_valid_data_nascimento("29/02/2006"))
     print(is_valid_data_nascimento("29-02-2020"))
 
