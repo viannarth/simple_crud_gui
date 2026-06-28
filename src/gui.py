@@ -247,10 +247,10 @@ class InsertPage(tk.Frame):
         entry5.grid(row=7, column=2)
         entry6.grid(row=8, column=2)
 
-        cep_val.trace("w", verify_cep)
-        data_nascimento_val.trace("w", verify_data_nascimento)
-        contato_val.trace("w", verify_contato)
-        cpf_cnpj_val.trace("w", verify_cpf_cnpj)
+        cep_val.trace_add("read", verify_cep)
+        data_nascimento_val.trace_add("read", verify_data_nascimento)
+        contato_val.trace_add("read", verify_contato)
+        cpf_cnpj_val.trace_add("read", verify_cpf_cnpj)
 
         tk.Label(self, textvariable=word, font=("Arial", 10)).grid(row=8, column=3)
 
@@ -633,10 +633,10 @@ class UpdatePage(tk.Frame):
 
             tk.Button(self, text='Atualizar funcionario', command=submit).grid(row=17, column=1)
 
-        cep_val.trace("w", verify_cep)
-        data_nascimento_val.trace("w", verify_data_nascimento)
-        contato_val.trace("w", verify_contato)
-        cpf_cnpj_val.trace("w", verify_cpf_cnpj)
+        cep_val.trace_add("read", verify_cep)
+        data_nascimento_val.trace_add("read", verify_data_nascimento)
+        contato_val.trace_add("read", verify_contato)
+        cpf_cnpj_val.trace_add("read", verify_cpf_cnpj)
 
         tk.Label(self, text="ID do funcionário a ser atualizado:", font=("Arial", 20)).grid(row=0, column=1, padx=10, pady=20)
 
