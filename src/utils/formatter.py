@@ -103,6 +103,9 @@ def is_valid_cpf_cnpj(num:str) -> bool:
 def is_valid_data_nascimento(data_nascimento:str) -> bool:
     num_data = format_num(data_nascimento)
 
+    if len(num_data) != 8:
+        return False
+
     year = int(num_data[-4:])
 
     if year < 1900 or year > 2026:
@@ -167,7 +170,7 @@ def main():
     # Validating birth date
     print("Validating birth date:")
     print(is_valid_data_nascimento("29/02/2006"))
-    print(is_valid_data_nascimento("29-02-2020"))
+    print(is_valid_data_nascimento("29/02/2020"))
 
 if __name__ == "__main__":
     main()
