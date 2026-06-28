@@ -1,17 +1,12 @@
 from database.database import Database
 
-from formatter import (
-    format_num,
-    format_text,
-    is_valid_text,
-    is_valid_num,
-    is_valid_cpf_cnpj, 
-    is_valid_data_nascimento,
-    is_valid_contato,
-    is_valid_cep
-)
+
+from formatter import *
 
 from cep import get_cep
+
+
+from typing import Any
 
 
 class Controller():
@@ -61,38 +56,82 @@ class Controller():
         except Exception as e:
             print("Could not autocomplete address. Error:", e)
 
+    def _format_data(self, nome:str, data_nascimento:str, cpf_cnpj:str, 
+        contato:str, rua:str, numero:str, complemento:str, bairro:str, 
+        cidade:str, uf:str, cep:str) -> dict[str, tuple]:
+
+        data:dict[str, tuple] = {'provider': None, 'address': None}
+
+        data['provider'] = (
+            format_text(nome), 
+            format_data_nascimento(data_nascimento), 
+            format_cpf_cnpj(cpf_cnpj), 
+            format_contato(contato)
+        )
+
+        data['address'] = (
+            format_text(rua), 
+            format_num(numero), 
+            format_text(complemento),
+            format_text(bairro), 
+            format_text(cidade), 
+            format_text(uf), 
+            format_cep(cep)
+        )
+
+        return data
+
     # Suppose all entered data is valid
     def insert_db(self, nome:str, data_nascimento:str, cpf_cnpj:str, 
         contato:str, rua:str, numero:str, complemento:str, bairro:str, 
         cidade:str, uf:str, cep:str) -> None:
         
-        data:dict[str, tuple] = {'provider': None, 'address': None}
-
-        data['provider'] = (
-            format_text(nome), 
-            format_num(data_nascimento), 
-            format_num(cpf_cnpj), 
-            format_num(contato)
+        data = self._format_data(
+            nome, data_nascimento, cpf_cnpj, contato, rua, numero, complemento, 
+            bairro, cidade, uf, cep
         )
-
-        if complemento is not None:
-            complemento = format_text(complemento)
-
-        data['address'] = (
-            format_text(rua), 
-            format_num(numero), 
-            complemento,
-            format_text(bairro), 
-            format_text(cidade), 
-            format_text(uf), 
-            format_num(cep)
-        )
-
+        
         try:
             self.db.insert(data)
 
         except Exception as e:
             print("Could not insert to database. Error:", e)
+
+    def verify_id(self, id:int):
+        return self.db.verify_id(id)
+
+    # Suppose the id exists in the database and all the data is valid
+    def update_db(self, id:int, nome:str, data_nascimento:str, cpf_cnpj:str, 
+        contato:str, rua:str, numero:str, complemento:str, bairro:str, 
+        cidade:str, uf:str, cep:str) -> None:
+
+        data = self._format_data(
+            nome, data_nascimento, cpf_cnpj, contato, rua, numero, complemento, 
+            bairro, cidade, uf, cep
+        )
+
+        try:
+            self.db.update(id, data)
+
+        except Exception as e:
+            print("Could not update the database. Error:", e)
+
+    # Suppose the id exists in the database
+    def delete_db(self, id:int) -> None:
+        
+        try:
+            self.db.delete(id)
+
+        except Exception as e:
+            print("Could not delete the data. Error:", e)
+
+    def read_db(self) -> list[Any] | None:
+        
+        try:
+            return self.db.fetch()
+
+        except Exception as e:
+            print("Could not delete the data. Error:", e)
 
 
 # Example of usage
@@ -105,8 +144,8 @@ def main():
     # Example of inserting
     nome = "Beltrano da Silva"
     data_nascimento = "12-12-2000"
-    cpf_cnpj = "789.517.070-83"
-    contato = "+12 99999-9999"
+    cpf_cnpj = "78951707083"
+    contato = "12999999999"
     cep = "01001000"
     address = controller.autocomplete_address("01001000")
     rua = address['rua']
@@ -118,6 +157,31 @@ def main():
 
     controller.insert_db(nome, data_nascimento, cpf_cnpj, contato, rua, numero,
         complemento, bairro, cidade, uf, cep)
+    
+    # Read data from the database
+    rows = controller.read_db()
+    for row in rows:
+        print(row)
+
+    # Update an entry from the database
+    id_up = 1
+    contato_up = "+21 99999-9999"
+    controller.update_db(id_up, None, None, None, contato_up, None, None, None, 
+        None, None, None, None)
+    
+    # Read updated data from the database
+    rows = controller.read_db()
+    for row in rows:
+        print(row)
+
+    # Delete an entry from the database
+    id_del = 1
+    controller.delete_db(id_del)
+
+    # Read data from the database
+    rows = controller.read_db()
+    for row in rows:
+        print(row)
 
 
 if __name__ == "__main__":
