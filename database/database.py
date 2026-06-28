@@ -240,8 +240,8 @@ class Database():
             statement = """SELECT prestadores.id, prestadores.nome, 
             prestadores.data_nascimento, prestadores.cpf_cnpj, 
             prestadores.contato, enderecos.rua, enderecos.numero,
-            enderecos.bairro, enderecos.cidade, enderecos.uf,
-            enderecos.cep
+            enderecos.complemento, enderecos.bairro, enderecos.cidade, 
+            enderecos.uf, enderecos.cep
             FROM prestadores JOIN
             enderecos ON prestadores.id=enderecos.id_prestador
             WHERE id=?;"""
@@ -264,9 +264,9 @@ class Database():
 
             statement = """SELECT prestadores.id, prestadores.nome, 
             prestadores.data_nascimento, prestadores.cpf_cnpj, 
-            prestadores.contato, enderecos.rua, enderecos.numero,
-            enderecos.bairro, enderecos.cidade, enderecos.uf,
-            enderecos.cep
+            prestadores.contato, enderecos.rua, enderecos.numero, 
+            enderecos.complemento, enderecos.bairro, enderecos.cidade, 
+            enderecos.uf, enderecos.cep
             FROM prestadores JOIN
             enderecos ON prestadores.id=enderecos.id_prestador;"""
 
