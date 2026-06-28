@@ -57,7 +57,7 @@ class Controller():
             return address
 
         except Exception as e:
-            print("Could not autocomplete address. Error:", e)
+            raise e
 
     def _format_data(self, nome:str, data_nascimento:str, cpf_cnpj:str, 
         contato:str, rua:str, numero:str, complemento:str, bairro:str, 
@@ -98,7 +98,7 @@ class Controller():
             self.db.insert(data)
 
         except Exception as e:
-            print("Could not insert to database. Error:", e)
+            raise e
 
     def verify_id(self, id:int):
         return self.db.verify_id(id)
@@ -117,7 +117,7 @@ class Controller():
             self.db.update(id, data)
 
         except Exception as e:
-            print("Could not update the database. Error:", e)
+            raise e
 
     # Suppose the id exists in the database
     def delete_db(self, id:int) -> None:
@@ -126,7 +126,7 @@ class Controller():
             self.db.delete(id)
 
         except Exception as e:
-            print("Could not delete the data. Error:", e)
+            raise e
 
     # Suppose the id exists in the database
     def read_id(self, id:int) -> Any | None:
@@ -135,7 +135,7 @@ class Controller():
             return self.db.read_id(id)
 
         except Exception as e:
-            print("Could not get the data. Error:", e)
+            raise e
 
     def read_db(self) -> list[Any] | None:
         
@@ -143,7 +143,7 @@ class Controller():
             return self.db.fetch()
 
         except Exception as e:
-            print("Could not fetch the data. Error:", e)
+            raise e
 
 
 # Example of usage

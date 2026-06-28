@@ -103,7 +103,12 @@ class InsertPage(tk.Frame):
                 word.set("\tCEP inválido.")
                 return
             
-            address_data = controller.autocomplete_address(cep)
+            try: 
+                address_data = controller.autocomplete_address(cep)
+            except Exception as e:
+                print("Could not verify CEP. Error:", e)
+                word.set("\tNão foi possível verificar CEP.")
+                return
 
             if address_data['valido'] == 'true':
                 word.set("\tCEP válido.")
@@ -196,8 +201,16 @@ class InsertPage(tk.Frame):
             if complemento == "":
                 complemento = None
 
-            controller.insert_db(nome, data_nascimento, cpf_cnpj, contato, rua,
+            try:
+                controller.insert_db(nome, data_nascimento, cpf_cnpj, contato, rua,
                 numero, complemento, bairro, cidade, uf, cep)
+            except Exception as e:
+                print("Could not insert to database. Error:", e)
+                label = tk.Label(self, text="Não foi possível adicionar ao banco de dados.", bg="#d9d9d9", fg="#dc143c", wraplength=100)
+                label.config(height=3, width=20)
+                label.grid(row=20, column=1, padx=10, pady=10)
+                self.after(5000, label.destroy)
+                return
             
             label = tk.Label(self, text="Funcionário criado com sucesso!", bg="#d9d9d9", fg="#dc143c", wraplength=100)
             label.config(height=3, width=20)
@@ -262,7 +275,17 @@ class DeletePage(tk.Frame):
         def submit():
             id = int(id_val.get())
 
-            if not controller.verify_id(id):
+            try: 
+                is_valid_id = controller.verify_id(id)
+            except Exception as e:
+                print("Could not verify ID in database. Error:", e)
+                label = tk.Label(self, text="Erro. Não foi possível verificar ID.", bg="#d9d9d9",
+                                 fg="#dc143c", wraplength=100)
+                label.place(relx=0.5, rely=0.5, anchor="center")
+                self.after(5000, label.destroy)
+                return
+
+            if not is_valid_id:
                 label = tk.Label(self, text="ID inexistente na base de dados.", bg="#d9d9d9",
                                  fg="#dc143c", wraplength=100)
                 label.place(relx=0.5, rely=0.5, anchor="center")
@@ -296,6 +319,13 @@ class ReadPage(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
 
+        try:
+            rows = controller.read_db()
+        except Exception as e:
+            print("Could not read from the database. Error:", e)
+            master.switch_frame(StartPage)
+            return
+
         line = "-"
         line = 3*27*6*line
 
@@ -305,8 +335,6 @@ class ReadPage(tk.Frame):
             label = Entry(self, width=27, fg='blue', font=('Arial', 16, 'bold'), background="#7cfc00")
             label.grid(row=0, column=j)
             label.insert(END, column)
-
-        rows = controller.read_db()
 
         i = 0
         for i, row in enumerate(rows):
@@ -394,6 +422,13 @@ class UpdatePage(tk.Frame):
             
             address_data = controller.autocomplete_address(cep)
 
+            try: 
+                address_data = controller.autocomplete_address(cep)
+            except Exception as e:
+                print("Could not verify CEP. Error:", e)
+                word.set("\tNão foi possível verificar CEP.")
+                return
+
             if address_data['valido'] == 'true':
                 word.set("\tCEP válido.")
                 address(address_data)
@@ -410,7 +445,17 @@ class UpdatePage(tk.Frame):
         def check_id():
             id = int(id_val.get())
 
-            if not controller.verify_id(id):
+            try: 
+                is_valid_id = controller.verify_id(id)
+            except Exception as e:
+                print("Could not verify ID in database. Error:", e)
+                label = tk.Label(self, text="Erro: Não foi possível verificar ID.", bg="#d9d9d9",
+                                 fg="#dc143c", wraplength=100)
+                label.grid(row=21, column=1, padx=10, pady=30)
+                self.after(5000, label.destroy)
+                return
+
+            if not is_valid_id:
                 label = tk.Label(self, text="ID inexistente na base de dados.", bg="#d9d9d9",
                                  fg="#dc143c", wraplength=100)
                 label.grid(row=21, column=1, padx=10, pady=30)
@@ -494,14 +539,26 @@ class UpdatePage(tk.Frame):
                 label.grid(row=20, column=1, padx=10, pady=30)
                 self.after(5000, label.destroy)
                 return
+            
+            if complemento == "":
+                complemento = None
+
+            try:
+                controller.update_db(id, nome, data_nascimento, cpf_cnpj, contato,
+                rua, numero, complemento, bairro, cidade, uf, cep)
+            except Exception as e:
+                print("Could not update the database. Error:", e)
+                label = tk.Label(self, text="Não foi possível atualizar o banco de dados.", bg="#d9d9d9",
+                                            fg="#dc143c", wraplength=100)
+                label.grid(row=20, column=1, padx=10, pady=30)
+                self.after(5000, label.destroy)
+
+                return
 
             label = tk.Label(self, text="Funcionário atualizado com sucesso!", bg="#d9d9d9",
                              fg="#dc143c", wraplength=100)
             label.grid(row=20, column=1, padx=10, pady=30)
             self.after(5000, label.destroy)
-
-            controller.update_db(id, nome, data_nascimento, cpf_cnpj, contato,
-                rua, numero, complemento, bairro, cidade, uf, cep)
 
             id_val.set("")
             nome_val.set("")
@@ -519,15 +576,24 @@ class UpdatePage(tk.Frame):
         def preencher():
             id = int(id_val.get())
 
-            data_id = controller.read_id(id)
-
-            nome_val.set(data_id[1])
-            data_nascimento_val.set(data_id[2])
-            cpf_cnpj_val.set(data_id[3])
-            contato_val.set(data_id[4])
-            cep_val.set(data_id[-1])
-            numero_val.set(data_id[6])
-            complemento_val.set(data_id[7])
+            try: 
+                data_id = controller.read_id(id)
+                nome_val.set(data_id[1])
+                data_nascimento_val.set(data_id[2])
+                cpf_cnpj_val.set(data_id[3])
+                contato_val.set(data_id[4])
+                cep_val.set(data_id[-1])
+                numero_val.set(data_id[6])
+                complemento_val.set(data_id[7])
+            except Exception as e:
+                print("Could not retrieve data with the ID from the database. Error:", e)
+                nome_val.set("")
+                data_nascimento_val.set("")
+                cpf_cnpj_val.set("")
+                contato_val.set("")
+                cep_val.set("")
+                numero_val.set("")
+                complemento_val.set("")
 
             tk.Label(self, text="Nome:", font=("Arial", 20)).grid(row=4, column=1)
             tk.Label(self, text="Data de Nascimento:", font=("Arial", 20)).grid(row=5, column=1)
