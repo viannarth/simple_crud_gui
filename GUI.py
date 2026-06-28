@@ -1,10 +1,14 @@
+from controller import Controller
+
 import tkinter as tk
 from tkinter import *
 
+
 LARGEFONT = ("Verdana", 35)
 
-class tkinterApp(tk.Tk):
+controller = Controller()
 
+class tkinterApp(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
         self._frame = None
@@ -17,6 +21,7 @@ class tkinterApp(tk.Tk):
         self._frame = new_frame
         self._frame.pack()
 
+
 class StartPage(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
@@ -24,10 +29,10 @@ class StartPage(tk.Frame):
         tk.Label(self, text="\n\nInterface do Catálogo", font=("Comfortaa", 50)).pack()
         tk.Label(self, text="\nSelecione a opção desejada\n", font=("Arial", 20)).pack()
 
-        sub1 = tk.Button(self, text="Cadastrar Prestador de Serviço", command=lambda: master.switch_frame(Page1))
-        sub2 = tk.Button(self, text='Excluir Prestador de serviço', command=lambda: master.switch_frame(Page2))
-        sub3 = tk.Button(self, text='Consultar Prestadores de serviço', command=lambda: master.switch_frame(Page3))
-        sub4 = tk.Button(self, text='Atualizar Prestador de serviço', command=lambda: master.switch_frame(Page4))
+        sub1 = tk.Button(self, text="Cadastrar Prestador de Serviço", command=lambda: master.switch_frame(InsertPage))
+        sub2 = tk.Button(self, text='Excluir Prestador de serviço', command=lambda: master.switch_frame(DeletePage))
+        sub3 = tk.Button(self, text='Consultar Prestadores de serviço', command=lambda: master.switch_frame(ReadPage))
+        sub4 = tk.Button(self, text='Atualizar Prestador de serviço', command=lambda: master.switch_frame(UpdatePage))
 
         sub1['height'] = 5
         sub2['height'] = 5
@@ -44,8 +49,8 @@ class StartPage(tk.Frame):
         sub3.pack()
         sub4.pack()
 
-class Page1(tk.Frame):
 
+class InsertPage(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
 
@@ -68,6 +73,7 @@ class Page1(tk.Frame):
             if value6.get() == "103D":
                 word.set("      Endereço certo ")
                 adress()
+
             else:
                 word.set("      Endereço errado")
                 value7.set("")
@@ -164,9 +170,7 @@ class Page1(tk.Frame):
         buttonback.grid(row=19, column=1, padx=10, pady=10)
 
 
-
-# third window frame page2
-class Page2(tk.Frame):
+class DeletePage(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
 
@@ -189,6 +193,7 @@ class Page2(tk.Frame):
 
 
         tk.Label(self, text="Id do funcionário a ser excluído:", font=("Arial", 20)).pack()
+
         entry = tk.Entry(self, textvariable=ID).pack()
 
         button = tk.Button(self, text='Excluir Funcionario', command=submit).pack()
@@ -200,11 +205,10 @@ class Page2(tk.Frame):
 
         tk.Label(self, text="", height = 30).pack()
 
-
         buttonback.pack()
 
 
-class Page3(tk.Frame):
+class ReadPage(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
 
@@ -226,9 +230,7 @@ class Page3(tk.Frame):
         button.grid(row=2, column=3, padx=0, pady=0)
 
 
-
-
-class Page4(tk.Frame):
+class UpdatePage(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
 
@@ -296,7 +298,6 @@ class Page4(tk.Frame):
 
             value7.set("Rua H8C")
 
-
         def submit():
             id = value1.get()
             nome = value2.get()
@@ -322,7 +323,6 @@ class Page4(tk.Frame):
             value10.set("")
             value11.set("")
             value12.set("")
-
 
         def Preencher():
             tk.Label(self, text="ID:", font=("Arial", 20)).grid(row=3, column=1)
@@ -367,5 +367,9 @@ class Page4(tk.Frame):
         buttonback.grid(row=18, column=1, padx=10, pady=10)
 
 
-app = tkinterApp()
-app.mainloop()
+def main():
+    app = tkinterApp()
+    app.mainloop()
+
+if __name__ == "__main__":
+    main()
