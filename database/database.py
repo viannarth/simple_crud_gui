@@ -231,6 +231,31 @@ class Database():
         finally:
             self.conn.close()        
 
+    def read_id(self, id:int):
+        self._connect()
+
+        try:
+            cur = self.conn.cursor()
+
+            statement = """SELECT prestadores.id, prestadores.nome, 
+            prestadores.data_nascimento, prestadores.cpf_cnpj, 
+            prestadores.contato, enderecos.rua, enderecos.numero,
+            enderecos.bairro, enderecos.cidade, enderecos.uf,
+            enderecos.cep
+            FROM prestadores JOIN
+            enderecos ON prestadores.id=enderecos.id_prestador
+            WHERE id=?;"""
+
+            cur.execute(statement, (id,))
+
+            return cur.fetchone()
+            
+        except (sqlite3.OperationalError, sqlite3.IntegrityError) as e:
+            print("Failed to fetch data:", e)
+
+        finally:
+            self.conn.close()   
+
     def fetch(self):
         self._connect()
 
@@ -290,10 +315,9 @@ def main():
     }
     db.update(id_up, data_up)
 
-    # Fetching data
-    rows = db.fetch()
-    for row in rows:
-        print(row)
+    # Reading the ID
+    row_up = db.read_id(id_up)
+    print(row_up)
 
 
 if __name__ == "__main__":
