@@ -128,13 +128,22 @@ class Controller():
         except Exception as e:
             print("Could not delete the data. Error:", e)
 
+    # Suppose the id exists in the database
+    def read_id(self, id:int) -> Any | None:
+
+        try:
+            return self.db.read_id(id)
+
+        except Exception as e:
+            print("Could not get the data. Error:", e)
+
     def read_db(self) -> list[Any] | None:
         
         try:
             return self.db.fetch()
 
         except Exception as e:
-            print("Could not delete the data. Error:", e)
+            print("Could not fetch the data. Error:", e)
 
 
 # Example of usage
@@ -173,9 +182,8 @@ def main():
         None, None, None, None)
     
     # Read updated data from the database
-    rows = controller.read_db()
-    for row in rows:
-        print(row)
+    row_up = controller.read_id(id_up)
+    print(row_up)
 
     # Delete an entry from the database
     id_del = 1
