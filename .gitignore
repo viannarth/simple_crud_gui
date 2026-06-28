@@ -1,6 +1,12 @@
 # Python virtual environment
 .env
 
+<<<<<<< HEAD
+=======
+# Python cache folder
+__pycache__
+
+>>>>>>> refactor
 # VSCode settings folder
 .vscode
 
