@@ -273,7 +273,16 @@ class DeletePage(tk.Frame):
         id_val = tk.StringVar()
 
         def submit():
-            id = int(id_val.get())
+            id = id_val.get()
+
+            if id == "" or not controller.validate_num(id):
+                label = tk.Label(self, text="Digite um ID válido.", bg="#d9d9d9",
+                                 fg="#dc143c", wraplength=100)
+                label.place(relx=0.5, rely=0.5, anchor="center")
+                self.after(5000, label.destroy)
+                return
+
+            id = int(id)
 
             try: 
                 is_valid_id = controller.verify_id(id)
@@ -443,7 +452,16 @@ class UpdatePage(tk.Frame):
                 uf_val.set("")
 
         def check_id():
-            id = int(id_val.get())
+            id = id_val.get()
+
+            if id == "" or not controller.validate_num(id):
+                label = tk.Label(self, text="Digite um ID válido.", bg="#d9d9d9",
+                                 fg="#dc143c", wraplength=100)
+                label.grid(row=21, column=1, padx=10, pady=30)
+                self.after(5000, label.destroy)
+                return
+
+            id = int(id)
 
             try: 
                 is_valid_id = controller.verify_id(id)
