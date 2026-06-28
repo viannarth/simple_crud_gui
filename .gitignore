@@ -5,6 +5,9 @@
 # Python cache folder
 __pycache__
 
+# mise file
+mise.toml
+
 # IDE cache folder
 .vscode
 .idea

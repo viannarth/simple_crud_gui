@@ -6,7 +6,7 @@ The project was implemented under the concepts of Object-Oriented Programming (O
 
 # Instructions
 
-The projected was tested in Python 3.12 and 3.13. Make sure to have one of these versions installed in your machine. 
+The projected was tested in Python 3.12.3 and 3.13.12. Please make sure to have one of these versions installed in your machine. 
 
 Clone the repository in a desired directory with `git clone` and run in `pip install -r requirements.txt` to install the project dependencies. It is recommended to create a Python virtual environment. Then, simply run `python app.py` to start the program.
 
