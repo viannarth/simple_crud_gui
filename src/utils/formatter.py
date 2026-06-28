@@ -132,7 +132,6 @@ def is_valid_cep(cep:str) -> bool:
     
     return True
 
-
 # Example of usage
 def main():
     # Formatting CPF

@@ -1,15 +1,15 @@
-from src.controller import Controller
+from .controller import Controller
+
 
 import tkinter as tk
 from tkinter import *
-from tkinter.scrolledtext import ScrolledText
 
 
 LARGEFONT = ("Verdana", 35)
 
 controller = Controller()
 
-class tkinterApp(tk.Tk):
+class App(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
         self._frame = None
@@ -571,7 +571,7 @@ class UpdatePage(tk.Frame):
 
 
 def main():
-    app = tkinterApp()
+    app = App()
     app.mainloop()
 
 if __name__ == "__main__":
