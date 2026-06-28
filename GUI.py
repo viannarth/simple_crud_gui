@@ -295,14 +295,25 @@ class ReadPage(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
 
-        list = ["ID", "Nome", "CPF/CNPJ", "Data de Nascimento", "Endereço", "Contato"]
+        header = ["ID", "Nome", "Data de Nascimento", "CPF/CNPJ", "Contato", "Endereço"]
 
-        for j in range(len(list)):
-            label = Entry(self, width=27, fg='blue',
-                          font=('Arial', 16, 'bold'))
-
+        for j, column in enumerate(header):
+            label = Entry(self, width=27, fg='blue', font=('Arial', 16, 'bold'))
             label.grid(row=0, column=j)
-            label.insert(END, list[j])
+            label.insert(END, column)
+
+        rows = controller.read_db()
+
+        for i, row in enumerate(rows):
+            for j in range(len(header) - 1):
+                label = Entry(self, width=29, fg='black',font=('Arial', 14))
+                label.grid(row=i+1, column=j)
+                label.insert(END, row[j])
+            
+            endereco = f"Rua: {row[5]}\nNúmero: {row[6]}\nBairro: {row[7]}\nCidade: {row[8]}\nUF: {row[9]}\nCEP: {row[10]}"
+            label = Entry(self, width=32, fg='black',font=('Arial', 12))
+            label.grid(row=i+1, column=j+1)
+            label.insert(END, endereco)
 
 
         button = tk.Button(self, text="Página Inicial",
@@ -421,6 +432,7 @@ class UpdatePage(tk.Frame):
             entry10.grid(row=12, column=2)
             entry11.grid(row=13, column=2)
             entry12.grid(row=14, column=2)
+        
         def submit():
             id = id_val.get()
             nome = nome_val.get()
@@ -474,6 +486,9 @@ class UpdatePage(tk.Frame):
             label.grid(row=20, column=1, padx=10, pady=30)
             self.after(5000, label.destroy)
 
+            controller.update_db(id, nome, data_nascimento, cpf_cnpj, contato,
+                rua, numero, complemento, bairro, cidade, uf, cep)
+
             id_val.set("")
             nome_val.set("")
             cpf_cnpj_val.set("")
@@ -506,7 +521,7 @@ class UpdatePage(tk.Frame):
             entry5.grid(row=7, column=2)
             entry6.grid(row=8, column=2)
 
-            button = tk.Button(self, text='Criar funcionario', command=submit).grid(row=17, column=1)
+            tk.Button(self, text='Atualizar funcionario', command=submit).grid(row=17, column=1)
 
         cep_val.trace("w", verify_cep)
         data_nascimento_val.trace("w", verify_data_nascimento)
@@ -517,9 +532,9 @@ class UpdatePage(tk.Frame):
 
         tk.Label(self, textvariable= word, font=("Arial", 10)).grid(row=8, column=3)
 
-        entry = tk.Entry(self, textvariable=id_val).grid(row=1, column=1, padx=10, pady=20)
+        tk.Entry(self, textvariable=id_val).grid(row=1, column=1, padx=10, pady=20)
 
-        button = tk.Button(self, text='Submeter funcionário a ser atualizado', command=check_id).grid(row=2, column=1,
+        tk.Button(self, text='Submeter funcionário a ser atualizado', command=check_id).grid(row=2, column=1,
                                                                                                     padx=10, pady=20)
 
         buttonback = tk.Button(self, text="Página Inicial",
