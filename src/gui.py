@@ -308,6 +308,7 @@ class ReadPage(tk.Frame):
 
         rows = controller.read_db()
 
+        i = 0
         for i, row in enumerate(rows):
             for j in range(len(header) - 1):
                 label = Entry(self, width=27, fg='black',font=('Arial', 14), bg="#d9d9d9", borderwidth=0)
